@@ -4,3 +4,6 @@
 *~
 # TuyaOpen IDE — machine-local devplat bridge (auto-generated)
 .tuyaopen/ide/
+
+#build files
+source/embedded/.build
