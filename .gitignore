@@ -1,0 +1,6 @@
+# OS / editor
+.DS_Store
+*.swp
+*~
+# TuyaOpen IDE — machine-local devplat bridge (auto-generated)
+.tuyaopen/ide/

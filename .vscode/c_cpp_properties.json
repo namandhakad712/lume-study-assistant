@@ -1,0 +1,36 @@
+{
+  "configurations": [
+    {
+      "name": "TuyaOpen",
+      "compileCommands": "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/compile_commands.json",
+      "includePath": [
+        "${workspaceFolder}/source/embedded/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/common/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_system/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_wifi/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_bluetooth/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_network/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_security/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_kv/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_cli/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_driver/uart",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/libcjson/cJSON",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/libtls/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/libhttp/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/libmqtt/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/liblvgl/v9",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/liblvgl/v9/lvgl",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/audio_player/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tal_image/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tuya_cloud_service/**",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/tuya_ai_service/**",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/src/peripherals/**/include",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/tuyaos/tuyaos_adapter/include/**",
+        "C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/boards/T5AI/**"
+      ],
+      "defines": [],
+      "intelliSenseMode": "gcc-arm"
+    }
+  ],
+  "version": 4
+}

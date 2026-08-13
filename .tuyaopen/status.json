@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.tuyaopen.dev/status.v1.json",
+  "schemaVersion": 1,
+  "lifecycle": "scaffolded",
+  "scaffold": {
+    "method": "sdk-template-copy",
+    "sourceTemplate": "base",
+    "scaffoldedAt": "2026-08-13T11:15:46.141Z",
+    "sdkRoot": "C:\\Users\\naman\\TuyaOpenIDE\\TuyaOpenSDK",
+    "kconfigId": "TUYA_T5AI_CORE"
+  },
+  "build": {
+    "lastResult": null,
+    "lastBuildAt": null,
+    "artifact": null,
+    "warnings": 0,
+    "errors": 0
+  },
+  "flash": {
+    "lastResult": null,
+    "lastFlashAt": null,
+    "target": null,
+    "port": null
+  },
+  "lastChecked": {
+    "tos": null,
+    "env": null
+  }
+}
