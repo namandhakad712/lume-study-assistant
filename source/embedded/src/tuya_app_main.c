@@ -53,7 +53,7 @@ tuya_iot_license_t license;
 #define PROJECT_VERSION "1.0.0"
 #endif
 
-#define DPID_VOLUME 3
+#define DPID_VOLUME 6
 
 /**
  * @brief user defined upgrade notify callback, it will notify device a OTA request received

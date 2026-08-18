@@ -9,12 +9,12 @@ flash,ram,text,code,rodata,data,bss,dec,hex,filename
 221218,492,220726,13958,206768,492,0,221218,`36022,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/../../tuyaos/tuyaos_adapter/include/kws/libtutuClear/libtutuClear_wakeup_nihaotuya_xiaozhitongxue_heytuya_hituya_20251024_small_model.a
 3541,296,3541,2556,985,0,296,3837,`efd,armino/cm33/libcm33.a
 1274,76,1273,1192,81,1,75,1349,`545,armino/bk_system/libbk_system.a
-86351,6933,85731,72012,13719,620,6313,92664,`169f8,armino/driver/libdriver.a
-28203,3244,27404,20750,6654,799,2445,30648,`77b8,armino/tuyaos_adapter/libtuyaos_adapter.a
+86141,6933,85521,71802,13719,620,6313,92454,`16926,armino/driver/libdriver.a
+26844,3057,26046,19512,6534,798,2259,29103,`71af,armino/tuyaos_adapter/libtuyaos_adapter.a
 473,4,473,336,137,0,4,477,`1dd,armino/bk_init/libbk_init.a
 19548,9766,19155,15622,3533,393,9373,28921,`70f9,armino/bk_cli/libbk_cli.a
 4229,90,4144,3866,278,85,5,4234,`108a,armino/bk7258_ap/libbk7258_ap.a
-15923,228,15859,14132,1727,64,164,16087,`3ed7,armino/common/libcommon.a
+15769,228,15705,13978,1727,64,164,15933,`3e3d,armino/common/libcommon.a
 251,32,251,246,5,0,32,283,`11b,armino/bk_startup/libbk_startup.a
 2436,17,2436,1958,478,0,17,2453,`995,armino/bk_event/libbk_event.a
 3585,73,3584,3080,504,1,72,3657,`e49,armino/bk_aud_param_ctrl/libbk_aud_param_ctrl.a
@@ -45,8 +45,7 @@ flash,ram,text,code,rodata,data,bss,dec,hex,filename
 6592,14,6592,5392,1200,0,14,6606,`19ce,armino/bk_dvp/libbk_dvp.a
 10712,66,10712,7834,2878,0,66,10778,`2a1a,armino/bk_uvc/libbk_uvc.a
 5675,636,5674,3288,2386,1,635,6310,`18a6,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
-1696798,18304,1695216,551614,1143602,1582,16722,1713520,`1a2570,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
-18373,0,18373,17372,1001,0,0,18373,`47c5,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libtjpg_sram.a
+603046,17053,601876,336330,265546,1170,15883,618929,`971b1,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 104832,18723,104822,91400,13422,10,18713,123545,`1e299,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libbluetooth_host_ble_ap.a
 20,4,20,20,0,0,4,24,`18,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libaudio_osi.a
 32,4,32,32,0,0,4,36,`24,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libvideo_osi.a
@@ -57,6 +56,7 @@ flash,ram,text,code,rodata,data,bss,dec,hex,filename
 385,0,385,266,119,0,0,385,`181,armino/raw_stream/libraw_stream.a
 5136,0,5136,3136,2000,0,0,5136,`1410,armino/uac_mic_stream/libuac_mic_stream.a
 5635,0,5635,3532,2103,0,0,5635,`1603,armino/uac_speaker_stream/libuac_speaker_stream.a
+18373,0,18373,17372,1001,0,0,18373,`47c5,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libtjpg_sram.a
 1000,0,1000,1000,0,0,0,1000,`3e8,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libscale_sram.a
 60602,4836,56762,34828,21934,3840,996,61598,`f09e,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/../../tuyaos/tuyaos_adapter/include/vad/lib/libaudio_subsys.a
 1307,17,1290,808,482,17,0,1307,`51b,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/../../tuyaos/tuyaos_adapter/src/misc/mftest/libtal_mftest.a

@@ -7,6 +7,6 @@ config APP_CONFIG
 
 config TUYA_PRODUCT_ID
     string "product ID of project"
-    default "u9bu0onwwwj6eyov"
+    default "okqfzw6tkrabylcs"
 
 endmenu
