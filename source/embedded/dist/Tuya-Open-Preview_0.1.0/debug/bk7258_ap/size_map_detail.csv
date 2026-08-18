@@ -534,13 +534,14 @@ flash,ram,text,code,rodata,data,bss,dec,hex,filename,filename
 654,0,654,536,118,0,0,654,`28e,uvc_stream_list.c.obj (ex armino/bk_uvc/libbk_uvc.a),armino/bk_uvc/libbk_uvc.a
 10712,66,10712,7834,2878,0,66,10778,`2a1a,armino/bk_uvc/libbk_uvc.a,armino/bk_uvc/libbk_uvc.a
 3876,605,3875,2090,1785,1,604,4480,`1180,tuya_app_main.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
-269,4,269,142,127,0,4,273,`111,app_chat_bot.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
+305,4,305,178,127,0,4,309,`135,app_chat_bot.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
+762,27,762,532,230,0,27,789,`315,app_knock.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
 732,0,732,488,244,0,0,732,`2dc,reset_netcfg.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
-4877,609,4876,2720,2156,1,608,5485,`156d,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
+5675,636,5674,3288,2386,1,635,6310,`18a6,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
 3130,17,3130,2256,874,0,17,3147,`c4b,ai_audio_player.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 2135,19,2131,1716,415,4,15,2150,`866,ai_chat_main.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 581,0,581,396,185,0,0,581,`245,ai_chat_ui.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
-1633,12,1625,1158,467,8,4,1637,`665,ai_manage_mode.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
+1653,12,1645,1178,467,8,4,1657,`679,ai_manage_mode.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 1844,11,1843,1464,379,1,10,1854,`73e,ai_mode_free.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 1830,11,1829,1440,389,1,10,1840,`730,ai_mode_wakeup.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 1743,11,1742,1384,358,1,10,1753,`6d9,ai_mode_hold.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
@@ -899,7 +900,7 @@ flash,ram,text,code,rodata,data,bss,dec,hex,filename,filename
 3096,0,3096,0,3096,0,0,3096,`c18,emoji_1f924_32.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 164,164,0,0,0,164,0,164,`a4,tal_platform.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 40,40,0,0,0,40,0,40,`28,ble_hs_cfg.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
-1696778,18304,1695196,551594,1143602,1582,16722,1713500,`1a255c,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
+1696798,18304,1695216,551614,1143602,1582,16722,1713520,`1a2570,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 13520,0,13520,13328,192,0,0,13520,`34d0,tjpgd.c.obj (ex C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libtjpg_sram.a),C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libtjpg_sram.a
 4853,0,4853,4044,809,0,0,4853,`12f5,jdev.c.obj (ex C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libtjpg_sram.a),C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libtjpg_sram.a
 18373,0,18373,17372,1001,0,0,18373,`47c5,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libtjpg_sram.a,C:/Users/naman/TuyaOpenIDE/TuyaOpenSDK/platform/T5AI/t5_os/ap/components/bk_libs/bk7258_ap/libs/libtjpg_sram.a

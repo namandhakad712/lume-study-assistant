@@ -11,6 +11,7 @@
 
 #include "ai_chat_main.h"
 #include "app_chat_bot.h"
+#include "app_knock.h"
 
 /***********************************************************
 ************************macro define************************
@@ -48,6 +49,13 @@ static void __printf_free_heap_tm_cb(TIMER_ID timer_id, void *arg)
 static void __ai_chat_handle_event(AI_NOTIFY_EVENT_T *event)
 {
     switch(event->type) {
+        case AI_USER_EVT_MIC_DATA: {
+            AI_NOTIFY_MIC_DATA_T *mic = (AI_NOTIFY_MIC_DATA_T *)event->data;
+            if (mic) {
+                app_knock_feed_mic(mic->data, mic->data_len);
+            }
+        }
+        break;
         default:
         break;
     }
@@ -63,6 +71,9 @@ OPERATE_RET app_chat_bot_init(void)
         .evt_cb       = __ai_chat_handle_event,
     };
     TUYA_CALL_ERR_RETURN(ai_chat_init(&ai_chat_cfg));
+
+    // Desk double-knock wake detection (Study AI Assistant feature)
+    TUYA_CALL_ERR_RETURN(app_knock_init());
 
     // Free heap size
     tal_sw_timer_create(__printf_free_heap_tm_cb, NULL, &sg_printf_heap_tm);
