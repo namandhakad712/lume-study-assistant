@@ -621,13 +621,15 @@
   10712	     66	  10712	   7834	   2878	      0	     66	  10778	   2a1a	armino/bk_uvc/libbk_uvc.a
 
   flash	    ram	   text	   code	 rodata	   data	    bss	    dec	    hex	filename
-   3876	    605	   3875	   2090	   1785	      1	    604	   4480	   1180	tuya_app_main.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a)
-    305	      4	    305	    178	    127	      0	      4	    309	    135	app_chat_bot.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a)
+   4028	    605	   4027	   2218	   1809	      1	    604	   4632	   1218	tuya_app_main.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a)
+    317	      4	    317	    190	    127	      0	      4	    321	    141	app_chat_bot.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a)
+   1439	     15	   1439	    858	    581	      0	     15	   1454	    5ae	app_dp_ctrl.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a)
     762	     27	    762	    532	    230	      0	     27	    789	    315	app_knock.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a)
     732	      0	    732	    488	    244	      0	      0	    732	    2dc	reset_netcfg.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a)
-   5675	    636	   5674	   3288	   2386	      1	    635	   6310	   18a6	C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
+   7278	    651	   7277	   4286	   2991	      1	    650	   7928	   1ef8	C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
 
   flash	    ram	   text	   code	 rodata	   data	    bss	    dec	    hex	filename
+   2610	     20	   2610	   1744	    866	      0	     20	   2630	    a46	ai_audio_input.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
    3130	     17	   3130	   2256	    874	      0	     17	   3147	    c4b	ai_audio_player.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
    2111	     19	   2107	   1692	    415	      4	     15	   2126	    84e	ai_chat_main.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
    1601	     12	   1593	   1126	    467	      8	      4	   1605	    645	ai_manage_mode.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
@@ -718,7 +720,6 @@
     942	      3	    940	    760	    180	      2	      1	    943	    3af	ble_trsmitr.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
     385	      0	    385	    260	    125	      0	      0	    385	    181	tuya_t5ai_core.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
     944	      2	    944	    648	    296	      0	      2	    946	    3b2	ai_agent.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
-   2610	     20	   2610	   1744	    866	      0	     20	   2630	    a46	ai_audio_input.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
     967	      1	    967	    690	    277	      0	      1	    968	    3c8	ai_skill.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
    1188	    168	   1020	    424	    596	    168	      0	   1188	    4a4	skill_emotion.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)
    1861	      0	   1861	   1126	    735	      0	      0	   1861	    745	skill_cloudevent.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a)

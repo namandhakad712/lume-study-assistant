@@ -11,6 +11,7 @@
 
 #include "ai_chat_main.h"
 #include "app_chat_bot.h"
+#include "app_dp_ctrl.h"
 #include "app_knock.h"
 
 /***********************************************************
@@ -54,6 +55,11 @@ static void __ai_chat_handle_event(AI_NOTIFY_EVENT_T *event)
             if (mic) {
                 app_knock_feed_mic(mic->data, mic->data_len);
             }
+        }
+        break;
+        case AI_USER_EVT_MODE_STATE_UPDATE: {
+            AI_MODE_STATE_E state = (AI_MODE_STATE_E)(intptr_t)event->data;
+            app_dp_on_mode_state(state);
         }
         break;
         default:

@@ -41,6 +41,7 @@
 #include "board_com_api.h"
 
 #include "app_chat_bot.h"
+#include "app_dp_ctrl.h"
 #include "reset_netcfg.h"
 
 /* Tuya device handle */
@@ -53,7 +54,7 @@ tuya_iot_license_t license;
 #define PROJECT_VERSION "1.0.0"
 #endif
 
-#define DPID_VOLUME 6
+#include "tuya_dp_profile.h"
 
 /**
  * @brief user defined upgrade notify callback, it will notify device a OTA request received
@@ -95,10 +96,30 @@ OPERATE_RET audio_dp_obj_proc(dp_obj_recv_t *dpobj)
         PR_DEBUG("idx:%d dpid:%d type:%d ts:%u", index, dp->id, dp->type, dp->time_stamp);
 
         switch (dp->id) {
-        case DPID_VOLUME: {
+        case DPID_VOLUME_SET: {
             uint8_t volume = dp->value.dp_value;
             PR_DEBUG("volume:%d", volume);
             ai_chat_set_volume(volume);
+            break;
+        }
+        case DPID_CONVERSATIONAL_MODE: {
+            app_dp_set_chat_mode(dp->value.dp_value);
+            break;
+        }
+        case DPID_MUTE: {
+            app_dp_set_mute(dp->value.dp_value > 0);
+            break;
+        }
+        case DPID_LED_SWITCH: {
+            app_dp_set_led_override(dp->value.dp_value > 0);
+            break;
+        }
+        case DPID_STUDY_MODE: {
+            app_dp_set_study_mode(dp->value.dp_value);
+            break;
+        }
+        case DPID_FOCUS_TIMER: {
+            app_dp_set_focus_timer(dp->value.dp_value);
             break;
         }
         default:
@@ -116,13 +137,23 @@ OPERATE_RET ai_audio_volume_upload(void)
 
     uint8_t volume = ai_chat_get_volume();
 
-    dp_obj.id             = DPID_VOLUME;
+    dp_obj.id             = DPID_VOLUME_SET;
     dp_obj.type           = PROP_VALUE;
     dp_obj.value.dp_value = volume;
 
     PR_DEBUG("DP upload volume:%d", volume);
 
     return tuya_iot_dp_obj_report(client, client->activate.devid, &dp_obj, 1, 0);
+}
+
+/**
+ * @brief Upload persisted DP state on first MQTT connect (volume + status).
+ */
+OPERATE_RET ai_dp_state_upload(void)
+{
+    ai_audio_volume_upload();
+    app_dp_report_status(DP_STATUS_STANDBY);
+    return OPRT_OK;
 }
 
 /**
@@ -157,7 +188,7 @@ void user_event_handler_on(tuya_iot_client_t *client, tuya_event_msg_t *event)
         static uint8_t first = 1;
         if (first) {
             first = 0;
-            ai_audio_volume_upload();
+            ai_dp_state_upload();
         }
         break;
 
@@ -324,6 +355,11 @@ void user_main(void)
     ret = app_chat_bot_init();
     if (ret != OPRT_OK) {
         PR_ERR("app_chat_bot_init failed");
+    }
+
+    ret = app_dp_ctrl_init();
+    if (ret != OPRT_OK) {
+        PR_ERR("app_dp_ctrl_init failed");
     }
 
     /* Start tuya iot task */
