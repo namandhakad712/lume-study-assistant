@@ -17,6 +17,9 @@ serial-debug-*.txt
 .target_logging/
 tyutool_read_*.bin
 
+# Local docs build output (if any)
+site/
+
 # Build intermediates (keep the published bins, drop the rest of dist)
 source/embedded/.build
 source/embedded/dist/*/debug/
