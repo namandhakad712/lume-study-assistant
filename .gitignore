@@ -3,7 +3,25 @@
 *.swp
 *~
 # TuyaOpen IDE — machine-local devplat bridge (auto-generated)
-.tuyaopen/ide/
+.tuyaopen/
+tuyaopen.project.ini
+.vscode/
 
-#build files
+# AI agent skills / IDE extension content (not app code)
+.agents/
+.claude/
+
+# Logs / device captures / flash dumps (may contain license region)
+serial-debug-*.txt
+*.log
+.target_logging/
+tyutool_read_*.bin
+
+# Build intermediates (keep the published bins, drop the rest of dist)
 source/embedded/.build
+source/embedded/dist/*/debug/
+source/miniapp/node_modules/
+source/miniapp/dist/
+source/miniapp/.cache/
+source/miniapp/package-lock.json
+source/miniapp/yarn.lock
