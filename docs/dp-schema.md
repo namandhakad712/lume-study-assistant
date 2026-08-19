@@ -9,6 +9,12 @@ panel and firmware; generated mirrors live in:
 Regenerate after any product change: `tuyaopen dp generate --target embedded,miniapp`
 (never hand-edit the generated files).
 
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Screenshot placeholder</strong> — Tuya Platform → Product → Device panel → Data
+  Points tab (DPs as shown when filled/set)<br/>
+  <small>Save as <code>docs/images/tuya-dp-list.png</code> and add: <code>&lt;img src="images/tuya-dp-list.png"&gt;</code></small>
+</div>
+
 ## Active DPs
 
 | ID | Code | Type | Mode | Bounds / Options | Meaning |
@@ -83,5 +89,11 @@ All other advanced functions (e.g. AI-related) are unselected on this product.
 | Mute (toggle) | 101 | Target = **Not** (toggle) |
 | LED indicator | 102 | default off |
 | Study mode | 103 | same enum as firmware |
+
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Screenshot placeholder</strong> — App panel screen showing Volume / Mode / Focus
+  Timer / Mute / LED / Study Mode controls filled with values<br/>
+  <small>Save as <code>docs/images/panel-home.png</code> and add: <code>&lt;img src="images/panel-home.png"&gt;</code></small>
+</div>
 
 Full panel guide: [Panel Setup](panel-setup.md)

@@ -55,6 +55,12 @@ The published bins are tracked in `dist/` so anyone can flash without rebuilding
 4. Click flash → **immediately press RST** on the board.
 5. Wait ~1m30s for `Verification passed. Flash succeeded.`
 
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Screenshot placeholder</strong> — tyutool GUI flash dialog (port, baud, bin
+  selected, success message)<br/>
+  <small>Save as <code>docs/images/flash-gui.png</code> and add: <code>&lt;img src="images/flash-gui.png"&gt;</code></small>
+</div>
+
 ### CLI
 
 ```powershell
@@ -91,3 +97,9 @@ Serial monitor on the **log port** (usually COM3 @ 460800 or as detected):
 ```
 
 Or use the TuyaOpen IDE's built-in monitor. Logs use `PR_DEBUG/PR_NOTICE/PR_WARN/PR_ERR`.
+
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Screenshot placeholder</strong> — serial monitor showing a clean boot
+  (app init ok, mqtt connected)<br/>
+  <small>Save as <code>docs/images/boot-log.png</code> and add: <code>&lt;img src="images/boot-log.png"&gt;</code></small>
+</div>

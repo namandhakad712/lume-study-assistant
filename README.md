@@ -1,27 +1,33 @@
 # Lume Study Assistant
 
-Voice-first AI study companion for NEET UG prep, built on the **TuyaOpen** embedded
-platform (T5AI chip, T5AI-Core board). Talk to it hands-free, start a study focus
-timer from the app, and get honest, voice-friendly help — no screen required.
+**Voice-first AI study companion for exam prep** — built on the **TuyaOpen**
+embedded platform (T5AI chip, T5AI-Core board). Talk to it hands-free, start a
+study focus timer from the app, and get honest, voice-friendly help — no screen
+required.
 
 > **Docs site**: https://namandhakad712.github.io/lume-study-assistant/
 > (full documentation — architecture, DP schema, agent config, build & flash guide)
 
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Hero image placeholder</strong> — device photo on a study desk<br/>
+  <small>Save as <code>docs/images/hero-device.jpg</code> and add: <code>&lt;img src="images/hero-device.jpg"&gt;</code></small>
+</div>
+
 ---
 
-## Features
+## ✨ Features
 
-- **Voice AI chat** — press the button or **double-knock the desk** to wake the AI;
-  ask anything, get short voice answers (Hinglish / Hindi / English).
-- **Study focus timer** — set 5–180 minutes from the panel app; the device plays a
-  chime on start/end and asks whether you hit your study goal.
-- **Conversation modes** — `hold` / `key` / `weakup` / `free` (DP 9), persisted.
-- **Mute, LED, volume, study mode** — all app-controlled via Tuya DPs.
-- **NEET-UG brain** — the Tuya AI agent ("Lume") keeps answers NCERT-first and
-  short, remembers the student's name/goal, and strictly refuses cloud timers.
-- **No screen, no wires** — single speaker device; everything is voice + app.
+- 🎙️ **Voice AI chat** — press the button or **double-knock the desk** to wake the
+  AI; ask anything, get short voice answers (Hinglish / Hindi / English).
+- ⏱️ **Study focus timer** — set 5–180 minutes from the panel app; the device plays
+  a chime on start/end and asks whether you hit your study goal.
+- 💬 **Conversation modes** — `hold` / `key` / `weakup` / `free` (DP 9), persisted.
+- 🔇 **Mute, LED, volume, study mode** — all app-controlled via Tuya DPs.
+- 🧠 **Exam-prep brain** — the Tuya AI agent ("Lume") keeps answers syllabus-first
+  and short, remembers the student's name/goal, and strictly refuses cloud timers.
+- 🚫 **No screen, no wires** — single speaker device; everything is voice + app.
 
-## Hardware
+## 🖥️ Hardware
 
 | | |
 |---|---|
@@ -32,31 +38,28 @@ timer from the app, and get honest, voice-friendly help — no screen required.
 | LED | On-board indicator (`led`), app-driven + AI-state driven |
 | Network | Wi-Fi, provisioned via the Tuya app |
 
-## Repository layout
+## 📁 Repository layout
 
 ```
 ├── .tuyaopen/                  # IDE + AI metadata (gitignored — machine-local)
-├── docs/                       # MkDocs site (GitHub Pages)
-│   ├── index.md                # overview
+├── docs/                       # docs site (GitHub Pages — markdown only)
+│   ├── index.md                # this overview
 │   ├── architecture.md         # chip, board, firmware modules
 │   ├── configuration.md        # project config, Kconfig, agent files
-│   ├── dp-schema.md            # full DP reference
+│   ├── dp-schema.md            # full DP reference + platform screenshots
 │   ├── agent.md                # AI agent ("Brain") prompt + injection
+│   ├── agent-prompt.md         # paste-ready prompt text
 │   ├── build-flash.md          # build & flash guide (with gotchas)
-│   └── panel-setup.md          # panel app setup (visual + Ray)
+│   ├── panel-setup.md          # panel app setup (visual + Ray)
 ├── source/
 │   ├── embedded/               # firmware (C) — build with tos.py
-│   │   ├── include/            # app headers, tuya_config.h, tuya_dp_profile.h
-│   │   └── src/                # tuya_app_main.c, app_chat_bot.c, app_dp_ctrl.c,
-│   │                           # app_knock.c, reset_netcfg.c
 │   └── miniapp/                # Ray mini-app panel (TypeScript)
 ├── dist/                       # published firmware bins (QIO / UA / UG)
 ├── LICENSE                     # MIT
-├── README.md
-└── TESTING-REPORT.md           # device test session log (findings A–E)
+└── README.md
 ```
 
-## Quick start
+## 🚀 Quick start
 
 ### 1. Build the firmware
 
@@ -92,7 +95,7 @@ handshake window (or power-cycle). Working recipe: tyutool GUI, **COM4 @ 460800*
 `tuya_config.h` ships with placeholder UUID/AuthKey — the module's real license
 was pre-burned at the factory. Authorize via tyutool UART or the IDE.
 
-## Product & DPs
+## 📊 Product & DPs
 
 Product PID `okqfzw6tkrabylcs` ("Rankify Assist"). Active DPs:
 
@@ -106,21 +109,10 @@ Product PID `okqfzw6tkrabylcs` ("Rankify Assist"). Active DPs:
 | 103 | `study_mode` | enum | rw | general / physics / chemistry / biology / … |
 | 104 | `focus_timer` | value | rw | 0–180 min, step 5 |
 
-Full reference: [docs/dp-schema.md](docs/dp-schema.md). Generated profile:
-`source/embedded/include/tuya_dp_profile.h`.
+Full reference with screenshots: [docs/dp-schema.md](docs/dp-schema.md).
+Generated profile: `source/embedded/include/tuya_dp_profile.h`.
 
-## Testing
 
-Device-on-bench findings are logged in [TESTING-REPORT.md](TESTING-REPORT.md)
-(issue classes A–E: agent, board, cloud, chat, environment). Highlights:
-
-- Cloud timers created by the agent fire correctly (BIC) but land on DP 207,
-  which is not in the schema — the agent is therefore forbidden from creating
-  timers (see [docs/agent.md](docs/agent.md)).
-- Re-flashing a licensed module can silently un-bind it from the account —
-  re-authorize in the app after flashing.
-- The board boots in `hold` conversation mode until the app sets `free`.
-
-## License
+## 📜 License
 
 MIT — see [LICENSE](LICENSE). Copyright (c) 2026 namandhakad712.

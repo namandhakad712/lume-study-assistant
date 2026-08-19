@@ -4,6 +4,12 @@ The panel is a **Ray mini-app** (source in `source/miniapp/`) plus the visual pa
 designed in the **TuyaOpen IDE → Panel** editor. This documents both so you can rebuild
 or replicate the panel.
 
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Screenshot placeholder</strong> — App panel home screen (Volume, Mode, Focus
+  Timer, Mute, LED, Study Mode)<br/>
+  <small>Save as <code>docs/images/panel-home.png</code> and add: <code>&lt;img src="images/panel-home.png"&gt;</code></small>
+</div>
+
 ## Product / DP reference
 
 Device product PID: `okqfzw6tkrabylcs` (bound to the "Lume" product on Tuya platform).
@@ -27,8 +33,13 @@ Mirror: `source/miniapp/src/devices/schema.ts` (generated) and
 
 **Theme:** Light, English (multi-language configured). Panel version 1.0.0.
 
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Screenshot placeholder</strong> — TuyaOpen IDE → Panel → Page editor canvas<br/>
+  <small>Save as <code>docs/images/panel-editor.png</code> and add: <code>&lt;img src="images/panel-editor.png"&gt;</code></small>
+</div>
+
 ### Page layout
-- **Title header**: "Lume" / "Rankify Assist" branding
+- **Title header**: "Lume" branding
 - **Volume Level** — value slider bound to DP 6 (`volume_set`), default 50%
 - **Conversation Mode** — enum selector bound to DP 9 (`conversational_mode`), options
   `hold / key / weakup / free`
@@ -46,6 +57,13 @@ Mirror: `source/miniapp/src/devices/schema.ts` (generated) and
 
 > Target-value rules: **Yes** = always send `true` (can never unmute), **No** = always
 > send `false`, **Not** = toggle (recommended for mute).
+
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Screenshot placeholders</strong> — Mute component config in IDE:<br/>
+  1. Interaction → Click → Trigger function → Mute → Target "Not"<br/>
+  2. Style linkage → Mute_colour_on+icon (colored) & Mute_colour_off+icon (gray #ccc9c9)<br/>
+  <small>Save as <code>docs/images/mute-config-1.png</code> and <code>docs/images/mute-config-2.png</code></small>
+</div>
 
 ### LED, Study Mode, Focus Timer
 - **Indicator LED** — toggle component bound to DP 102 (`led_switch`), default off.

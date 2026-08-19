@@ -47,6 +47,12 @@ mic ──> ai_audio_input ──> app_chat_bot (AI_USER_EVT_MIC_DATA)
 speaker <── ai_audio_player (TTS answers, alerts, timer chimes)
 ```
 
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Diagram placeholder</strong> — a clean audio/AI flow diagram (mic → knock detect →
+  AI agent → TTS → speaker)<br/>
+  <small>Save as <code>docs/images/audio-ai-flow.png</code> and add: <code>&lt;img src="images/audio-ai-flow.png"&gt;</code></small>
+</div>
+
 - Wake: physical button (`ai_chat_button`) or double knock → `ai_mode_handle_key(TDL_BUTTON_PRESS_SINGLE_CLICK, …)`.
 - Chat replies are played through `ai_audio_player` (short, voice-first answers).
 - Agent text injection uses `tuya_ai_text_input` (see [AI Agent](agent.md)).

@@ -14,6 +14,11 @@ the device streams mic audio up, the agent answers, TTS comes back down.
 | Where to edit | TuyaOpen IDE → **AI Agent → Brain → Study Assist Brain** → prompt |
 | Publish | save prompt → **publish** |
 
+<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
+  📸 <strong>Screenshot placeholder</strong> — Study Brain settings page in the IDE<br/>
+  <small>Save as <code>docs/images/brain-settings.png</code> and add: <code>&lt;img src="images/brain-settings.png"&gt;</code></small>
+</div>
+
 ## System prompt
 
 The full prompt lives in [`docs/agent-prompt.md`](agent-prompt.md) (paste-ready).
@@ -21,7 +26,8 @@ Highlights:
 
 - **Voice-first**: answers < 15 s of speech, one idea per sentence, no lists/tables.
 - **Language**: matches the student (Hinglish / Hindi / English).
-- **NEET-UG focus**: NCERT-first, step-by-step problems, PYQ guidance.
+- **Exam-prep focus**: syllabus-first (NCERT-first for board/entrance), step-by-step
+  problems, PYQ guidance, depth matched to the exam (board / NEET / JEE / school).
 - **Memory**: remembers name, subject, study goal; asks when unsure.
 - **Focus timer — strict contract** (the only timer the agent handles):
 
