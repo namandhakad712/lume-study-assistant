@@ -1,5 +1,8 @@
 # Lume Study Assistant
 
+> ⚠️ **ARCHIVED** — no further changes or maintenance. This project was built as
+> part of the **TuyaOpen IDE Preview Program** (evaluation/demo purposes).
+
 **Voice-first AI study companion for exam prep** — built on the **TuyaOpen**
 embedded platform (T5AI chip, T5AI-Core board). Talk to it hands-free, start a
 study focus timer from the app, and get honest, voice-friendly help — no screen
@@ -12,6 +15,23 @@ required.
 ---
 > **Docs site**: https://namandhakad712.github.io/lume-study-assistant/
 > (full documentation — architecture, DP schema, agent config, build & flash guide)
+
+## ℹ️ Built with (attributes)
+
+| Component | Property / Statement | Reference |
+|-----------|---------------------|-----------|
+| **TuyaOpen SDK** | Open-source Tuya IoT development framework (TAL/TKL abstraction, `tos.py` toolchain) | [github.com/tuya/tuyaopen](https://github.com/tuya/tuyaopen) |
+| **TuyaOpen IDE** | AI-agent-assisted IDE for embedded + panel development; scaffolded this project (`tuyaopen-app`, framework `base`) | [developer.tuya.com](https://developer.tuya.com) |
+| **T5AI chip** | Wi-Fi + AI-audio SoC (Beken BK7258-class) with on-chip AI audio components (mic capture, player, KWS) | [developer.tuya.com/docs](https://developer.tuya.com/en/docs/iot) |
+| **T5AI-Core board** | Tuya development board (`TUYA_T5AI_CORE` Kconfig) — mic, speaker, button, LED, Wi-Fi | [developer.tuya.com](https://developer.tuya.com) |
+| **Tuya Developer Platform** | Cloud: product `okqfzw6tkrabylcs`, DP schema, AI Agent ("Brain") `aipt_fvjuqr11yk8w`, BIC cloud functions | [developer.tuya.com](https://developer.tuya.com) |
+| **Ray mini-app (panel)** | Tuya Panel SDK / Ray framework — `source/miniapp/` (TypeScript + React) | [developer.tuya.com/en/docs/iot/ray](https://developer.tuya.com/en/docs/iot/ray) |
+| **tyutool** | Tuya serial flash/debug tool (GUI + CLI) shipped with the SDK | `tools/tyutool/` in the SDK |
+
+> This is an **independent demo project** — not affiliated with, endorsed by, or
+> maintained by Tuya. Built during the TuyaOpen IDE Preview Program using public
+> SDK/docs and Tuya's cloud platform under their respective licenses/terms.
+
 ## ✨ Features
 
 - 🎙️ **Voice AI chat** — press the button or **double-knock the desk** to wake the

@@ -28,3 +28,5 @@ source/miniapp/dist/
 source/miniapp/.cache/
 source/miniapp/package-lock.json
 source/miniapp/yarn.lock
+# TuyaOpen IDE — machine-local devplat bridge (auto-generated)
+.tuyaopen/ide/
