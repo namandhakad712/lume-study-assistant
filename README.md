@@ -1,8 +1,5 @@
 # Lume Study Assistant
 
-> ⚠️ **ARCHIVED** — no further changes or maintenance. This project was built as
-> part of the **TuyaOpen IDE Preview Program** (evaluation/demo purposes).
-
 **Voice-first AI study companion for exam prep** — built on the **TuyaOpen**
 embedded platform (T5AI chip, T5AI-Core board). Talk to it hands-free, start a
 study focus timer from the app, and get honest, voice-friendly help — no screen
@@ -130,7 +127,9 @@ Product PID `okqfzw6tkrabylcs` ("Rankify Assist"). Active DPs:
 Full reference with screenshots: [docs/dp-schema.md](docs/dp-schema.md).
 Generated profile: `source/embedded/include/tuya_dp_profile.h`.
 
-
 ## 📜 License
 
 MIT — see [LICENSE](LICENSE). Copyright (c) 2026 namandhakad712.
+
+> ⚠️ **ARCHIVED** — no further changes or maintenance. This project was built as
+> part of the **TuyaOpen IDE Preview Program** (evaluation/demo purposes).
