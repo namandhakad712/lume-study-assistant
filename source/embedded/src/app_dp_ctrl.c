@@ -7,9 +7,9 @@
  *   DP 6  volume_set          (rw)  - ai_chat_set_volume (see tuya_app_main.c)
  *   DP 9  conversational_mode (rw)  - ai_mode_switch (hold/key/weakup/free)
  *   DP 101 mute               (rw)  - ai_audio_input_stop/start
- *   DP 102 led_switch         (rw)  - LED override (AI modes also drive it)
+ *   DP 102 led_switch         (rw)  - LED on/off override (AI modes also drive it)
  *   DP 103 study_mode         (rw)  - persisted subject context for the agent
- *   DP 104 focus_timer        (rw)  - countdown, chime + DP report at 0
+ *   DP 104 focus_timer        (rw)  - countdown, chime + agent goal question at 0
  */
 
 #include "tal_api.h"
@@ -18,7 +18,10 @@
 #include "ai_audio_input.h"
 #include "ai_audio_player.h"
 #include "ai_manage_mode.h"
+#include "ai_user_event.h"
 #include "tdl_led_manage.h"
+#include "tuya_ai_agent.h"
+#include "tuya_ai_input.h"
 #include "tuya_iot.h"
 #include "tuya_iot_dp.h"
 
@@ -52,6 +55,7 @@
 ***********************************************************/
 static TDL_LED_HANDLE_T sg_led_hdl = NULL;
 static bool             sg_led_override_off = false; /* user forced LED off */
+static bool             sg_led_override_on  = false; /* user forced LED on  */
 static bool             sg_muted = false;
 static uint8_t          sg_study_mode = STUDY_MODE_GENERAL;
 
@@ -80,7 +84,37 @@ static void __app_dp_apply_led_override(void)
     }
     if (sg_led_override_off) {
         tdl_led_set_status(sg_led_hdl, TDL_LED_OFF);
+    } else if (sg_led_override_on) {
+        tdl_led_set_status(sg_led_hdl, TDL_LED_ON);
     }
+}
+
+/**
+ * @brief Report the focus timer end to the user: local chime + ask the agent
+ *        to speak the goal-completion question (best effort).
+ */
+static void __app_dp_focus_end_chime(void)
+{
+    ai_audio_player_alert(AI_AUDIO_ALERT_WAKEUP);
+
+    if (!tuya_ai_agent_is_ready()) {
+        PR_WARN("app_dp: agent not ready, skip goal question");
+        return;
+    }
+
+    /* Ensure an input session exists so the text upload is accepted. */
+    tuya_ai_input_start(false);
+
+    const char *question =
+        "The focus timer has ended. Ask the user whether they completed their study goal.";
+    for (int i = 0; i < 10; i++) {
+        if (tuya_ai_text_input((BYTE_T *)question, strlen(question), strlen(question)) == OPRT_OK) {
+            PR_NOTICE("app_dp: focus goal question sent to agent");
+            return;
+        }
+        tal_system_sleep(100);
+    }
+    PR_WARN("app_dp: goal question injection failed");
 }
 
 static void __app_dp_focus_tick(TIMER_ID timer_id, void *arg)
@@ -95,9 +129,9 @@ static void __app_dp_focus_tick(TIMER_ID timer_id, void *arg)
         return;
     }
 
-    /* Countdown finished: chime + report 0 + stop ticking. */
+    /* Countdown finished: chime + agent question + report 0 + stop ticking. */
     PR_NOTICE("app_dp: focus timer finished");
-    ai_audio_player_alert(AI_AUDIO_ALERT_WAKEUP);
+    __app_dp_focus_end_chime();
     __app_dp_report_value(DPID_FOCUS_TIMER, PROP_VALUE, 0);
     tal_sw_timer_stop(sg_focus_timer);
 }
@@ -125,7 +159,24 @@ OPERATE_RET app_dp_set_chat_mode(uint8_t mode_idx)
     }
 
     PR_NOTICE("app_dp: switch chat mode -> %d", mode);
-    return ai_mode_switch(mode);
+    OPERATE_RET rt = ai_mode_switch(mode);
+    if (rt != OPRT_OK) {
+        PR_ERR("app_dp: mode switch failed rt=%d", rt);
+        return rt;
+    }
+
+    /* Persist mode + volume so the selection survives reboot / MQTT reconnect.
+     * ai_mode_switch() itself does NOT save to KV; only ai_chat_set_volume()
+     * writes the config (it snapshots the current mode). */
+    rt = ai_chat_set_volume(ai_chat_get_volume());
+    if (rt != OPRT_OK) {
+        PR_WARN("app_dp: mode persist failed rt=%d", rt);
+    }
+
+    /* Echo so the cloud/app sees the applied value. */
+    __app_dp_report_value(DPID_CONVERSATIONAL_MODE, PROP_ENUM, mode_idx);
+
+    return OPRT_OK;
 }
 
 OPERATE_RET app_dp_set_mute(bool mute)
@@ -151,8 +202,9 @@ OPERATE_RET app_dp_set_mute(bool mute)
 
 OPERATE_RET app_dp_set_led_override(bool on)
 {
-    PR_NOTICE("app_dp: led_switch %s", on ? "on (AI drives)" : "off (forced)");
+    PR_NOTICE("app_dp: led_switch %s", on ? "on (forced)" : "off (forced)");
     sg_led_override_off = !on;
+    sg_led_override_on  = on;
     __app_dp_apply_led_override();
     return OPRT_OK;
 }
@@ -181,6 +233,10 @@ OPERATE_RET app_dp_set_focus_timer(uint32_t minutes)
 
     sg_focus_remaining_s = minutes * 60;
     PR_NOTICE("app_dp: focus timer set -> %u min (%u s)", minutes, sg_focus_remaining_s);
+
+    /* Audible confirmation that the timer started. */
+    ai_audio_player_alert(AI_AUDIO_ALERT_POWER_ON);
+
     tal_sw_timer_start(sg_focus_timer, FOCUS_TICK_MS, TAL_TIMER_CYCLE);
     return OPRT_OK;
 }

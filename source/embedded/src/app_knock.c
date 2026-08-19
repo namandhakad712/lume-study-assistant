@@ -6,8 +6,9 @@
  * every PCM slice is delivered to the app via AI_USER_EVT_MIC_DATA. This module
  * computes a cheap energy level per slice and runs a small state machine that
  * recognizes a double knock (two short loud bursts 100-800 ms apart). When a
- * double knock is confirmed and the chat is idle, a worker thread fires the same
- * key event as the physical button: ai_mode_handle_key(TDL_BUTTON_PRESS_SINGLE_CLICK).
+ * double knock is confirmed:
+ *   - chat idle    -> wake the AI (same key event as the physical button)
+ *   - chat active  -> stop the AI (break the session, back to idle)
  *
  * No registers are consumed - everything happens on the existing codec stream.
  */
@@ -15,7 +16,10 @@
 #include "tal_api.h"
 
 #include "ai_user_event.h"
+#include "ai_audio_input.h"
+#include "ai_audio_player.h"
 #include "ai_manage_mode.h"
+#include "tuya_ai_agent.h"
 
 #include "app_knock.h"
 
@@ -27,7 +31,7 @@
 
 /* Hit threshold = max(noise_floor * gain, hard minimum). Tune on hardware. */
 #define KNOCK_THRESH_GAIN       (8)
-#define KNOCK_THRESH_MIN        (300)
+#define KNOCK_THRESH_MIN        (150)
 
 /* A knock is a short burst: longer loud stretches (speech/music) are ignored. */
 #define KNOCK_MAX_BURST_MS      (200)
@@ -62,6 +66,7 @@ static uint32_t          sg_floor_win_start = 0;
 static bool              sg_in_burst = false;
 static uint32_t          sg_burst_start = 0;
 static uint32_t          sg_last_knock_at = 0;
+static uint32_t          sg_last_tune_log = 0;
 static THREAD_HANDLE     sg_worker = NULL;
 
 /***********************************************************
@@ -76,8 +81,8 @@ static void __app_knock_fire(void)
 }
 
 /**
- * @brief Worker thread: fires the wake trigger outside of the audio callback
- *        context.
+ * @brief Worker thread: fires the wake/stop trigger outside of the audio
+ *        callback context.
  */
 static void __app_knock_worker(void *arg)
 {
@@ -85,9 +90,15 @@ static void __app_knock_worker(void *arg)
         if (sg_knock_pending) {
             sg_knock_pending = false;
 
-            /* Only wake from idle - never interrupt listening/thinking/speaking. */
             if (ai_mode_get_state() == AI_MODE_STATE_IDLE) {
                 __app_knock_fire();
+            } else {
+                PR_NOTICE("app_knock: double knock -> stop AI chat");
+                ai_audio_player_stop(AI_AUDIO_PLAYER_ALL);
+                ai_audio_input_reset();
+                tuya_ai_agent_event(AI_EVENT_CHAT_BREAK, 0);
+                /* Mode layer handles EXIT by returning to IDLE. */
+                ai_user_event_notify(AI_USER_EVT_EXIT, NULL);
             }
         }
         tal_system_sleep(KNOCK_WORKER_POLL_MS);
@@ -107,17 +118,6 @@ OPERATE_RET app_knock_feed_mic(uint8_t *data, uint32_t data_len)
     if (data == NULL || data_len == 0) {
         __app_knock_reset_burst();
         return OPRT_OK;
-    }
-
-    /* A knock only makes sense while the chat is idle. Reset the recognizer on
-     * any non-idle state so a burst during listening can't straddle the return
-     * to idle and fire a stale trigger. */
-    if (ai_mode_get_state() != AI_MODE_STATE_IDLE) {
-        if (sg_state == KNOCK_STATE_ARMED) {
-            sg_state = KNOCK_STATE_IDLE;
-        }
-        /* Keep updating the noise floor even while speaking, so the threshold is
-         * right when we return to idle. */
     }
 
     /* Cheap energy = mean of |int16 sample| over the slice (16-bit mono PCM). */
@@ -148,6 +148,13 @@ OPERATE_RET app_knock_feed_mic(uint8_t *data, uint32_t data_len)
     uint32_t threshold = sg_floor * KNOCK_THRESH_GAIN;
     if (threshold < KNOCK_THRESH_MIN) {
         threshold = KNOCK_THRESH_MIN;
+    }
+
+    /* Throttled tuning log: energy vs threshold vs state. */
+    if (now - sg_last_tune_log >= 2000) {
+        sg_last_tune_log = now;
+        PR_DEBUG("app_knock: energy=%u thr=%u floor=%u state=%d mode_state=%d",
+                 energy, threshold, sg_floor, sg_state, ai_mode_get_state());
     }
 
     if (sg_state == KNOCK_STATE_COOLDOWN) {
