@@ -533,10 +533,10 @@ flash,ram,text,code,rodata,data,bss,dec,hex,filename,filename
 10712,66,10712,7834,2878,0,66,10778,`2a1a,armino/bk_uvc/libbk_uvc.a,armino/bk_uvc/libbk_uvc.a
 4028,605,4027,2218,1809,1,604,4632,`1218,tuya_app_main.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
 317,4,317,190,127,0,4,321,`141,app_chat_bot.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
-1925,16,1925,1074,851,0,16,1941,`795,app_dp_ctrl.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
+2063,16,2063,1142,921,0,16,2079,`81f,app_dp_ctrl.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
 970,31,970,640,330,0,31,1001,`3e9,app_knock.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
 732,0,732,488,244,0,0,732,`2dc,reset_netcfg.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
-7972,656,7971,4610,3361,1,655,8627,`21b3,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
+8110,656,8109,4678,3431,1,655,8765,`223d,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a,C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaapp.a
 2610,20,2610,1744,866,0,20,2630,`a46,ai_audio_input.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 3130,17,3130,2256,874,0,17,3147,`c4b,ai_audio_player.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a
 2111,19,2107,1692,415,4,15,2126,`84e,ai_chat_main.c.obj (ex C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a),C:/Projects/Tuya-Open-Preview/source/embedded/.build/lib/libtuyaos.a

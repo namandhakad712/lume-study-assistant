@@ -90,6 +90,30 @@ static void __app_dp_apply_led_override(void)
 }
 
 /**
+ * @brief Inject a text line into the agent session (best effort).
+ *        Gives the agent real device context so it does not fabricate state.
+ */
+static void __app_dp_agent_text(const char *text, const char *log_tag)
+{
+    if (!tuya_ai_agent_is_ready()) {
+        PR_WARN("app_dp: agent not ready, skip: %s", log_tag);
+        return;
+    }
+
+    /* Ensure an input session exists so the text upload is accepted. */
+    tuya_ai_input_start(false);
+
+    for (int i = 0; i < 10; i++) {
+        if (tuya_ai_text_input((BYTE_T *)text, strlen(text), strlen(text)) == OPRT_OK) {
+            PR_NOTICE("app_dp: %s sent to agent", log_tag);
+            return;
+        }
+        tal_system_sleep(100);
+    }
+    PR_WARN("app_dp: %s injection failed", log_tag);
+}
+
+/**
  * @brief Report the focus timer end to the user: local chime + ask the agent
  *        to speak the goal-completion question (best effort).
  */
@@ -97,24 +121,9 @@ static void __app_dp_focus_end_chime(void)
 {
     ai_audio_player_alert(AI_AUDIO_ALERT_WAKEUP);
 
-    if (!tuya_ai_agent_is_ready()) {
-        PR_WARN("app_dp: agent not ready, skip goal question");
-        return;
-    }
-
-    /* Ensure an input session exists so the text upload is accepted. */
-    tuya_ai_input_start(false);
-
-    const char *question =
-        "The focus timer has ended. Ask the user whether they completed their study goal.";
-    for (int i = 0; i < 10; i++) {
-        if (tuya_ai_text_input((BYTE_T *)question, strlen(question), strlen(question)) == OPRT_OK) {
-            PR_NOTICE("app_dp: focus goal question sent to agent");
-            return;
-        }
-        tal_system_sleep(100);
-    }
-    PR_WARN("app_dp: goal question injection failed");
+    __app_dp_agent_text(
+        "The focus timer has ended. Ask the user whether they completed their study goal.",
+        "focus goal question");
 }
 
 static void __app_dp_focus_tick(TIMER_ID timer_id, void *arg)
@@ -236,6 +245,12 @@ OPERATE_RET app_dp_set_focus_timer(uint32_t minutes)
 
     /* Audible confirmation that the timer started. */
     ai_audio_player_alert(AI_AUDIO_ALERT_POWER_ON);
+
+    /* Tell the agent the timer is running so it answers timer questions honestly. */
+    char timer_note[64];
+    snprintf(timer_note, sizeof(timer_note),
+             "The user started the study focus timer for %u minutes. Remember this.", minutes);
+    __app_dp_agent_text(timer_note, "focus timer start");
 
     tal_sw_timer_start(sg_focus_timer, FOCUS_TICK_MS, TAL_TIMER_CYCLE);
     return OPRT_OK;

@@ -85,6 +85,25 @@
 
 ---
 
+### A8 [BUG] 🟠 Cloud timer actions are rejected — DP 207 ("timer") missing from device schema
+- **Tool/Area**: TuyaOpen SDK `tuya_device_timer.c` + product DP schema
+- **Symptom**: voice-set timer ("5 minute timer please") → agent creates a **cloud timer** via the BIC "timer" function → at the scheduled time the SDK executes it and pushes `{"207":"{...}"}` to the app; firmware logs `DP ID 207 Invalid` (dp_schema.c:352/387) and **does nothing**. From the user's side: "timer set" was confirmed by voice, then it "never ends".
+- **Evidence** (device log, 13:55:21, exactly 5 min after the voice request at 13:50:52 — cloud timer rounded to the minute):
+  ```
+  tuya_device_timer.c:600 #29907337  [ONCE: 2026-08-19 13:55]  >> Action: dp207="{"date":"20260819","loops":"0000000","time":"13:55"}"
+  dp_schema.c:352 DP ID 207 Invalid
+  ```
+- **Root cause**: DP 207 is the **standard hidden Tuya "timer" DP** used by the cloud-timer service (product's `uiConfig.bic` has `"code":"timer","selected":true`). The device schema (fetched from cloud activation) contains only the product's declared DPs (2,6,9,101–104) — no 207 — so `tuya_iot_dp_parse(DP_CMD_TIMER)` rejects the action before the app can react.
+- **Impact**: 🟠 Any timer created via voice (or by the panel's scheduled-task UI) silently no-ops on the device.
+- **Workaround**: set the focus timer from the app (DP 104 path) — verified working (chime + goal question at 13:44:19).
+- **Fix suggestion**: (1) register DP 207 in the device schema as a hidden string DP so the timer action is accepted, then map a received 207 action to the focus-timer-end flow (chime + agent question); or (2) have the SDK forward unregistered-DP timer actions to a generic callback instead of dropping them with a log-only error.
+
+### A9 [BUG] 🟠 Reflashing the bound module silently un-binds the device in the app
+- **Tool/Area**: tuya-devplat / cloud pairing after reflash
+- **Symptom**: after a successful reflash, the device received a cloud-initiated reset (`Reset id:d75abd…`, `unactive`, `GATEWAY_NOT_EXISTS`) and dropped offline; the app showed it unbound. No tool surfaces "your reflash invalidated the binding" — only log forensics reveal it.
+- **Impact**: 🟠 silent service disruption; user must re-pair.
+- **Fix suggestion**: post-flash status line in IDE/CLI ("device was previously bound; re-pair required"), and a clearer cloud-side reason in the app.
+
 ### A7 [BUG] 🟠 Real-Name Verification redirect loop blocks license collection (individual developer)
 - **Tool/Area**: Tuya Developer Platform web (product → free license collection)
 - **Symptom**: individual developer account is asked to pass real-name verification before placing orders/collecting licenses; clicking "Go Now" redirects back to the profile page in a **loop** — verification can never be completed, and the free-license flow stays permanently blocked.
@@ -136,6 +155,34 @@
 - **Detail**: The preset labeled "Full chip erase" targets `0x00000000 – 0x001EDFFF` (~1.9 MB) — a fraction of the 8 MB flash. Labels and ranges disagree; CLI `erase` default length is `0x200000` (2 MB) too. A user believing the chip is erased may leave stale app data in higher regions.
 - **Fix suggestion**: rename presets to actual ranges ("Bootloader+app region erase"), or implement true full-chip erase.
 
+### B9 [UX] 🟠 Flashing hangs with `plugin error: timeout after 10 attempts` — no auto-reset circuit on T5AI-Core
+- **Tool/Area**: tyutool CLI + GUI, T5AI-Core board
+- **Detail**: the board has **no DTR/RTS auto-reset circuit**; the flashed app boots ~1 s after power-on and grabs the UART. `tyutool_cli write` repeatedly fails `plugin error: timeout after 10 attempts` (GUI shows the same) with **no hint** that a manual **RST button press during the handshake window** (or a power-cycle) is required. We wasted a full session on this before discovering the procedure.
+- **Workaround**: hold RST or power-cycle while the tool is in the handshake/retry phase (the GUI's ~10 s window works with an RST press).
+- **Fix suggestion**: board bring-up docs must state "no auto-reset circuit — press RST during handshake"; tool should print that hint on handshake timeout; and the IDE flash command should detect the missing reset line.
+
+### B10 [UX] 🟡 Focus-timer start plays a Chinese voice greeting instead of a chime
+- **Tool/Area**: app firmware `app_dp_ctrl.c:238`
+- **Detail**: starting the focus timer (DP 104) plays `AI_AUDIO_ALERT_POWER_ON` — a voice greeting ("我在这里，我们一起玩吧" / "Hello, I'm here, let's play") — which the user perceived as a confusing "weird Chinese phrase" on every timer start. The alert enum names don't map to what a user expects (POWER_ON is a spoken greeting, not a beep), and nothing in the docs warns that alert files are voice prompts.
+- **Impact**: 🟡 confusing UX; the "start" sound cannot be told apart from a wake-up greeting.
+- **Fix suggestion**: use a dedicated short chime/alert for timer start (or the WAKEUP-type alert used at timer end), and document the bundled alert files' actual audio content per enum index. Verified enum order from `ai_audio_player.h`: POWER_ON=0, NOT_ACTIVE=1, NETWORK_CFG=2, NETWORK_CONNECTED=3, NETWORK_FAIL=4, NETWORK_DISCONNECT=5, BATTERY_LOW=6, PLEASE_AGAIN=7, LONG_KEY_TALK=8, KEY_TALK=9, WAKEUP_TALK=10, RANDOM_TALK=11, WAKEUP=12.
+
+### B11 [UX] 🟡 AI agent hallucinates device state — no device-context injection
+- **Tool/Area**: AI agent (Brain) + app firmware
+- **Detail**: the cloud agent has **zero visibility into device state**; asked "timer kitna bacha?" it asserted "Ravi ka time chal raha hai. Timer running hai." and later "Focus timer khatam ho chuka hai" while the device had **no** timer active (no DP 104 traffic in the log). Because the agent truthfully confirmed a timer it created via the cloud BIC timer (A8), the user believed a real countdown existed.
+- **Impact**: 🟡 wrong answers erode trust; hard to detect without log forensics.
+- **Fix suggestion**: (1) inject device context into the agent via `tuya_ai_text_input` when a timer starts/ends (we implemented this — `__app_dp_agent_text` in `app_dp_ctrl.c`); (2) prompt rule forbidding the agent from claiming it can see/set device state.
+
+### B12 [UX] 🟡 Device boots in HOLD mode although app default is FREE
+- **Tool/Area**: app firmware KV config
+- **Detail**: on boot the KV read returns `{"volume":86,"chat_mode":0}` — `chat_mode:0` = `AI_CHAT_MODE_HOLD` overrides the code default `AI_CHAT_MODE_FREE`. A user who previously switched to Free (DP 9 = free) must re-switch after every reboot until the KV is rewritten with the new mode. The boot mode depends on a stale KV, not on the code default.
+- **Fix suggestion**: persist mode on change (write KV) and/or treat KV `chat_mode` as authoritative only after first user change; surface current boot mode in the boot banner.
+
+### B13 [UX] 🟡 Boot log replays "previous crash" record — looks like a live crash (follow-up to B7)
+- **Tool/Area**: T5AI bootloader / crash handler
+- **Detail**: after any crash, every boot prints the stored MemFault dump **before** the app banner, so a healthy boot of a previously-crashed device reads as an ongoing crash loop unless you check timestamps. Cost us a misdiagnosis cycle.
+- **Fix suggestion**: label replayed records ("stored crash from previous boot") and print a "live crash" marker only for real-time faults.
+
 ---
 
 ## C. Notices / Observations
@@ -162,6 +209,20 @@
 ### C6 [NOT] 🟠 SDK reference app ships an uninitialized-variable bug: `reset_netcfg.c` returns uninitialized `rt`
 - **Detail**: `reset_netconfig_check()` declares `OPERATE_RET rt;` and only assigns it in some branches — when `rst_cnt < RESET_NETCNT_MAX` it returns garbage (kept faithful in our port, flagged for the report). UB in SDK sample code.
 - **Suggestion**: initialize `rt = OPRT_OK`; add `-Werror=maybe-uninitialized` in sample builds.
+
+### C7 [NOT] 🟡 Dual-UART port roles are not stable across tools/enumeration on T5AI-Core
+- **Detail**: `tyutool list-ports` reports COM3 = USB-Enhanced-SERIAL-B (CH342) and COM4 = USB-Enhanced-SERIAL-A. Flash succeeded via **GUI on COM4** @460800 (13:20:18, verification passed) while the CLI on COM3 kept failing with handshake timeouts (see B9); serial-monitor capture worked on COM3 @460800. The "flash port = lower enumeration" rule of thumb did **not** hold reliably here.
+- **Suggestion**: the flash tool should probe both UARTs and/or report which one is the bootloader-capable port instead of assuming an ordering.
+
+### C8 [NOT] 🟡 MQTT decryption hiccup after reconnect: `Cmd Parse Fail:-25344`
+- **Detail**: after an MQTT re-connect, two `Cmd Parse Fail:-25344` (MQTT decrypt) errors appeared; the device recovered on its own (subsequent PUBACKs fine). Also one `event or session id was null` from the AI agent event path. No user-visible impact in this session.
+- **Suggestion**: log the plaintext reason alongside the opaque code so reconnects can be diagnosed without SDK source diving.
+
+### C9 [NOT] 🔵 Cloud-timer BIC works end-to-end (timing verified)
+- **Detail**: despite A8, the **cloud** side of the timer was correct: the agent's "timer" BIC function created the task and it fired at the exact scheduled minute (13:55:21 for a 5-min timer requested at 13:50:52, rounding to the next minute). Only the device-side DP-207 acceptance was missing.
+
+### C10 [NOT] 🔵 App-controlled focus timer (DP 104) verified end-to-end
+- **Detail**: setting the timer from the app works: `app_dp: focus timer set -> 5 min (300 s)`, `focus timer finished` at the deadline, WAKEUP alert chime played, goal-question text injected to the agent, and `{"104":0}` reported back to the cloud. Knock detector healthy throughout (energy 150–232 thr band, heap stable ~136K, PSRAM ~8.5M, watchdog fed).
 
 ---
 
@@ -225,6 +286,12 @@
 ### E6 [ADD] 🔵 tyutool `--plain` + tab-separated `list-ports` is agent-friendly
 - `path  vid:pid  usb_interface  port_role  display_name` parsed cleanly for COM3/COM4 (CH342 dual-serial). Flash-vs-log port roles worked first try.
 
+### E7 [ADD] 🔵 GUI flash tool verified: `Verification passed. Flash succeeded.` in 1m31s
+- After the B9 RST-during-handshake procedure was discovered, the tyutool **GUI** flashed and **verified** the firmware (`Verification passed. Flash succeeded.` — 1m31s), which was more robust than the CLI's handshake window. The GUI also exposed `Authorize` read verification cleanly on the same port.
+
+### E8 [ADD] 🔵 AI agent genuinely creates cloud timers when asked by voice
+- The Brain's "timer" BIC function is real and precise: voice "5 minute timer please" → cloud timer created → fired at the scheduled minute (13:55:21, 5 min later, one-shot, loops `0000000`). The agent did **not** fabricate the "Done – timer set" confirmation — the defect was only the device-side DP-207 handling (A8).
+
 ---
 
 ## F. Session Log (chronological, this project)
@@ -246,12 +313,25 @@
 | 13 | v3 | `project create` | "Study Assist Brain" `aipt_fvjuqr11yk8w` ✅ created via CLI (icon: reused existing CDN URL because `ai-image generate` → api key permission denied, D6) |
 | 14 | v3 | `product-agent save` (device-side) | ❌ `PREREQUISITE_NOT_MET` — agent not published/shelved; suggested `project model-save/publish` **don't exist in CLI** (D6); `update-status` fails `AI_PLATFORM_PROJECT_EXIST_UNPUBLISHED_REGION` → publish must be IDE-only |
 | 15 | v3 | license collection | ❌ Real-Name Verification redirect loop (A7) blocks free-license collection → v3 new-product path abandoned |
+| 16 | Flash | reflash attempt 1 (CLI COM3, GUI COM4) | ❌ `plugin error: timeout after 10 attempts` repeatedly — **no auto-reset circuit on T5AI-Core** (B9); app boots and grabs UART |
+| 17 | Flash | reflash with **RST press during handshake** (GUI, COM4 @460800) | ✅ `Verification passed. Flash succeeded.` 1m31s — new firmware live (knock tuning logs, DP schema 2/6/9/101–104) |
+| 18 | Cloud | post-flash device state | device received cloud-initiated reset (`Reset id:…`, `unactive`, `GATEWAY_NOT_EXISTS`) — silently unbound (A9); re-paired in app |
+| 19 | Feature | full feature pass (serial-debug 13:36–13:44) | ✅ mute (DP101), LED (DP102), mode→free (DP9=3), **app-set focus timer end** (13:44:19: chime + goal question + `{"104":0}`), knock detector stable |
+| 20 | UX | focus timer start | plays `AI_AUDIO_ALERT_POWER_ON` — a Chinese **voice greeting**, not a chime (B10); enum order documented |
+| 21 | AI | agent asked about timer | ❌ hallucinated "timer running"/"timer khatam ho chuka" — device had no active timer (B11) → fix: device-context injection + prompt rule |
+| 22 | AI | voice "5 minute timer please" | agent created a **cloud timer** (E8) which fired at 13:55:21 → `DP ID 207 Invalid` → device did nothing (A8). "Timer never ended" mystery solved |
+| 23 | Cloud | reconnect stability | `Cmd Parse Fail:-25344` ×2 + `event or session id was null` — self-recovered (C8) |
+| 24 | Build | timer-context injection (`__app_dp_agent_text` in `app_dp_ctrl.c`) | ✅ code added: agent told when app-timer starts (with real minutes) and when it ends; **build+flash pending** |
 
 ---
 
 ## G. Open Report Items
 
-- [ ] Verify knock threshold behavior on live desk (tuning pass)
+- [x] Verify knock threshold behavior on live desk (tuning pass) — ✅ thresholds 150–232 tracked room noise correctly (C10)
 - [ ] Validate volume DP id on the new product after creation (C2)
 - [ ] Re-test A1 fix across a display-less and a display-equipped board
 - [ ] Confirm D1 license CLI gap with a feature request ticket
+- [x] Flash UX on T5AI-Core (B9) — procedure documented (RST during handshake); GUI more robust than CLI
+- [x] Voice-set timer investigation (A8) — root cause: DP 207 missing from device schema; cloud side correct (E8); fix suggested, not yet applied
+- [ ] Rebuild + flash the timer-context injection (row 24) and verify agent answers about app-set timers truthfully
+- [ ] Test cloud-timer fix (A8) once DP-207 registration is applied
