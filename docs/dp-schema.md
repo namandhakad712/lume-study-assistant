@@ -88,10 +88,8 @@ All other advanced functions (e.g. AI-related) are unselected on this product.
 | LED indicator | 102 | default off |
 | Study mode | 103 | same enum as firmware |
 
-<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
-  📸 <strong>Screenshot placeholder</strong> — App panel screen showing Volume / Mode / Focus
-  Timer / Mute / LED / Study Mode controls filled with values<br/>
-  <small>Save as <code>docs/images/panel-home.png</code> and add: <code>&lt;img src="images/panel-home.png"&gt;</code></small>
+<div align="center">
+  <img src="images/panel-home.png" alt="App panel screen" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;">
 </div>
 
 Full panel guide: [Panel Setup](panel-setup.md)

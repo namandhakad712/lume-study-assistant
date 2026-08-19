@@ -4,10 +4,8 @@ The panel is a **Ray mini-app** (source in `source/miniapp/`) plus the visual pa
 designed in the **TuyaOpen IDE → Panel** editor. This documents both so you can rebuild
 or replicate the panel.
 
-<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
-  📸 <strong>Screenshot placeholder</strong> — App panel home screen (Volume, Mode, Focus
-  Timer, Mute, LED, Study Mode)<br/>
-  <small>Save as <code>docs/images/panel-home.png</code> and add: <code>&lt;img src="images/panel-home.png"&gt;</code></small>
+<div align="center">
+  <img src="images/panel-home.png" alt="App panel home screen" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;">
 </div>
 
 ## Product / DP reference
