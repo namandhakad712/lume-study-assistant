@@ -54,12 +54,12 @@ Highlights:
 
 The agent only knows what the device tells it — it has no device-state visibility.
 
-## Why no cloud timers (test finding A8)
+## Why no cloud timers
 
-During bench testing the agent was asked for a "5 minute timer". It created a
-**cloud timer** via the product's BIC `timer` function. The timer fired on time
-(cloud-side) but delivered its action as **DP 207** — which does not exist in the
-product schema (`DP ID 207 Invalid`) — so the device never reacted.
+The agent once created a **cloud timer** via the product's BIC `timer` function
+when asked for a "5 minute timer". The timer fired on time (cloud-side) but
+delivered its action as **DP 207** — which does not exist in the product schema
+(`DP ID 207 Invalid`) — so the device never reacted.
 
 Conclusion: cloud timers are unreliable for this product. The strict prompt above
 is the fix; the firmware never creates cloud timers itself.

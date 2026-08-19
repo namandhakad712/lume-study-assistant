@@ -10,7 +10,6 @@
 | Framework | `base` (audio / AI components) |
 | RTOS | tuya-tal (`tuya_app_main` task, 1024×4 stack, prio 1) |
 | Entry point | `tuya_app_main()` — `source/embedded/src/tuya_app_main.c` |
-| License | factory pre-burned on module (UUID/AuthKey in `tuya_config.h` are placeholders) |
 
 Board config (`app_default.config`):
 

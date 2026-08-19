@@ -1,14 +1,14 @@
 # Configuration
 
 This page documents every configuration surface of the project: project metadata,
-platform/board config, device authorization, AI-agent skill files, and the
+platform/board config, device credentials, AI-agent skill files, and the
 generated DP profile.
 
 ## Project identity
 
 | File | Role |
 |------|------|
-| `.tuyaopen/project.json` | canonical descriptor: name `Tuya-Open-Preview`, version `0.1.0`, type `tuyaopen-app`, framework `base`, license `Apache-2.0` |
+| `.tuyaopen/project.json` | canonical descriptor: name `Tuya-Open-Preview`, version `0.1.0`, type `tuyaopen-app`, framework `base` |
 | `.tuyaopen/status.json` | lifecycle (`scaffolded → configured → built → flashed`), build/flash results |
 | `.tuyaopen/architecture.json` | surfaces (embedded/miniapp), modules, dependencies |
 | `tuyaopen.project.ini` | human-readable mirror: project, platform (`t5ai`), board (`TUYA_T5AI_CORE`), build output |
@@ -47,15 +47,15 @@ Notable switches:
 Change via `tos.py config` / `tos.py menuconfig` — do not hand-edit unless you
 know the exact Kconfig symbols.
 
-## Device authorization (`source/embedded/include/tuya_config.h`)
+## Device credentials (`source/embedded/include/tuya_config.h`)
 
-- Ships with **placeholder** `UUID` / `AuthKey` — never real credentials.
-- The module's license was **pre-burned at the factory**; the device authorizes
-  itself with the burned credentials, so the placeholders never need filling.
-- After a full reflash, the device may come up unbound — re-authorize via the
-  TuyaOpen IDE or `tyutool` UART authorize, then re-pair in the app.
+- Ships with **placeholders** — never real credentials.
+- The module's credentials are **pre-burned at the factory**; the device uses the
+  burned set automatically, so the placeholders never need filling.
+- After a full reflash, the device may come up unbound — re-pair in the Tuya app
+  (authorize via tyutool UART or the IDE if prompted).
 - The bundled flash dump (`tyutool_read_*.bin`) is gitignored on purpose — it
-  contains the license region and must never be published.
+  contains the credential region and must never be published.
 
 ## DP profile (generated)
 

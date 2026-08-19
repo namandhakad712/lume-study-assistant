@@ -92,8 +92,9 @@ handshake window (or power-cycle). Working recipe: tyutool GUI, **COM4 @ 460800*
 
 ### 4. Device authorization
 
-`tuya_config.h` ships with placeholder UUID/AuthKey — the module's real license
-was pre-burned at the factory. Authorize via tyutool UART or the IDE.
+`tuya_config.h` ships with placeholders — the module's real device credentials
+were pre-burned at the factory. If the device comes up unbound after a reflash,
+re-authorize via tyutool UART or the IDE, then re-pair in the app.
 
 ## 📊 Product & DPs
 

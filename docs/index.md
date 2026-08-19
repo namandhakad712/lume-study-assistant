@@ -44,8 +44,7 @@ short, honest, voice-friendly answers. No screen required.
 │   └── miniapp/          # Ray mini-app panel (TypeScript)
 ├── dist/                 # published firmware bins (QIO / UA / UG)
 ├── LICENSE               # MIT
-├── README.md
-└── TESTING-REPORT.md     # bench test sessions (findings A–E)
+└── README.md
 ```
 
 ## 📖 Documentation
@@ -59,7 +58,6 @@ short, honest, voice-friendly answers. No screen required.
 | [Agent Prompt](agent-prompt.md) | paste-ready prompt text |
 | [Panel Setup](panel-setup.md) | visual panel + Ray mini-app, mute toggle config + screenshots |
 | [Build & Flash](build-flash.md) | `tos.py` build, tyutool flash, RST gotcha, ports |
-| [Testing](testing.md) | what was verified on the bench, known issues |
 
 ## 🚀 Quick start
 
@@ -70,8 +68,8 @@ cd source/embedded && tos.py build
 # 2. Flash (press RST during handshake! no auto-reset circuit)
 tyutool --plain write -d t5 -p COM4 -f dist/Tuya-Open-Preview_0.1.0/Tuya-Open-Preview_QIO_0.1.0.bin
 
-# 3. Authorize (module license was pre-burned; re-auth after reflash)
-#    tyutool authorize — or the TuyaOpen IDE
+# 3. Authorize (module credentials were pre-burned; re-pair after reflash)
+#    via tyutool or the TuyaOpen IDE
 
 # 4. Panel + agent — see Panel Setup and AI Agent pages
 ```
