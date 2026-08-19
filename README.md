@@ -5,16 +5,13 @@ embedded platform (T5AI chip, T5AI-Core board). Talk to it hands-free, start a
 study focus timer from the app, and get honest, voice-friendly help — no screen
 required.
 
-> **Docs site**: https://namandhakad712.github.io/lume-study-assistant/
-> (full documentation — architecture, DP schema, agent config, build & flash guide)
-
-<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
-  📸 <strong>Hero image placeholder</strong> — device photo on a study desk<br/>
-  <small>Save as <code>docs/images/hero-device.jpg</code> and add: <code>&lt;img src="images/hero-device.jpg"&gt;</code></small>
+<div align="center" style="border:2px dashed #999; border-radius:12px; margin:24px 0; background:#fafafa;">
+  <img src="docs/images/lume.jpg">
 </div>
 
 ---
-
+> **Docs site**: https://namandhakad712.github.io/lume-study-assistant/
+> (full documentation — architecture, DP schema, agent config, build & flash guide)
 ## ✨ Features
 
 - 🎙️ **Voice AI chat** — press the button or **double-knock the desk** to wake the

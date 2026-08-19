@@ -92,4 +92,8 @@ All other advanced functions (e.g. AI-related) are unselected on this product.
   <img src="images/panel-home.png" alt="App panel screen" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;">
 </div>
 
+<div align="center">
+  <img src="images/panel-home-ai-capabilities.png" alt="Panel AI capabilities" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+</div>
+
 Full panel guide: [Panel Setup](panel-setup.md)

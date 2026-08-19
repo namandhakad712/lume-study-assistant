@@ -14,9 +14,8 @@ the device streams mic audio up, the agent answers, TTS comes back down.
 | Where to edit | TuyaOpen IDE → **AI Agent → Brain → Study Assist Brain** → prompt |
 | Publish | save prompt → **publish** |
 
-<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
-  📸 <strong>Screenshot placeholder</strong> — Study Brain settings page in the IDE<br/>
-  <small>Save as <code>docs/images/brain-settings.png</code> and add: <code>&lt;img src="images/brain-settings.png"&gt;</code></small>
+<div align="center">
+  <img src="images/brain-settings.png" alt="Study Brain settings" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;">
 </div>
 
 ## System prompt

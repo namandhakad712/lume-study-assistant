@@ -31,11 +31,6 @@ Mirror: `source/miniapp/src/devices/schema.ts` (generated) and
 
 **Theme:** Light, English (multi-language configured). Panel version 1.0.0.
 
-<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
-  📸 <strong>Screenshot placeholder</strong> — TuyaOpen IDE → Panel → Page editor canvas<br/>
-  <small>Save as <code>docs/images/panel-editor.png</code> and add: <code>&lt;img src="images/panel-editor.png"&gt;</code></small>
-</div>
-
 ### Page layout
 - **Title header**: "Lume" branding
 - **Volume Level** — value slider bound to DP 6 (`volume_set`), default 50%
@@ -56,11 +51,8 @@ Mirror: `source/miniapp/src/devices/schema.ts` (generated) and
 > Target-value rules: **Yes** = always send `true` (can never unmute), **No** = always
 > send `false`, **Not** = toggle (recommended for mute).
 
-<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
-  📸 <strong>Screenshot placeholders</strong> — Mute component config in IDE:<br/>
-  1. Interaction → Click → Trigger function → Mute → Target "Not"<br/>
-  2. Style linkage → Mute_colour_on+icon (colored) & Mute_colour_off+icon (gray #ccc9c9)<br/>
-  <small>Save as <code>docs/images/mute-config-1.png</code> and <code>docs/images/mute-config-2.png</code></small>
+<div align="center">
+  <img src="images/mute-config-1.png" alt="Mute component config" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;">
 </div>
 
 ### LED, Study Mode, Focus Timer
@@ -68,6 +60,10 @@ Mirror: `source/miniapp/src/devices/schema.ts` (generated) and
 - **Study Mode** — selector bound to DP 103 (`study_mode`), same enum options as DP list.
 - **Focus Timer** — setter bound to DP 104; on change the device starts the countdown,
   plays a start chime, and reports `{"104":0}` when finished.
+
+<div align="center">
+  <img src="images/led-config-1.png" alt="LED component config" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+</div>
 
 ## Mini-app (Ray) panel source
 

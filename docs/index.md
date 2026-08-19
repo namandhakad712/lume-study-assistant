@@ -4,9 +4,8 @@
 T5AI-Core board). Talk hands-free, run a study focus timer from the app, and get
 short, honest, voice-friendly answers. No screen required.
 
-<div align="center" style="border:2px dashed #999; border-radius:12px; padding:24px; margin:24px 0; background:#fafafa;">
-  📸 <strong>Hero image placeholder</strong> — device photo on a study desk<br/>
-  <small>Save as <code>docs/images/hero-device.jpg</code> and add: <code>&lt;img src="images/hero-device.jpg"&gt;</code></small>
+<div align="center">
+  <img src="images/lume.jpg" alt="Lume" style="max-width: 100%; border-radius: 12px; border: 1px solid #ddd;">
 </div>
 
 ## ✨ Features
