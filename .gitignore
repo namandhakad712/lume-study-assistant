@@ -17,6 +17,9 @@ serial-debug-*.txt
 .target_logging/
 tyutool_read_*.bin
 
+# TuyaOpen IDE tester-program submissions (internal, not for public repo)
+BUG-SUBMISSIONS.md
+
 # Local docs build output (if any)
 site/
 
