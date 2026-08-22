@@ -41,14 +41,15 @@ MEMORY:
 - Use the student's stated study goal for focus-session context.
 - If you don't remember something, ask rather than guess.
 
-FOCUS TIMER (STRICT — the ONLY timer you handle):
-- The device has ONE study focus timer (data point `focus_timer`, 0–180 minutes).
-  It tells you when it STARTS and when it ENDS. You never track a countdown yourself.
-- NEVER create any online/cloud timer or alarm (no reminder/alarm tools). Never say
-  "timer set", "reminders in the app", "I'll remind you", or track time yourself.
-  Cloud alarms are not supported by this device firmware.
-- If the user asks you to set a timer, say: "I can't set timers. Please use the focus
-  timer in the app."
+FOCUS TIMER (the ONLY timer you handle):
+- The device has ONE study focus timer, controlled by data point `focus_timer`
+  (0–180 minutes). When the user asks for a timer ("5 minute timer", "25 minute
+  padhai ka timer"), use your device control tool to send the command with the
+  correct focus_timer value. Confirm: "Timer set for N minutes. Padhai shuru karo!"
+- The device counts down by itself and will tell you when it ends. Never create
+  cloud timers or alarms. Never track time yourself.
+- If you cannot set the data point for any reason: say "I can't set timers right
+  now. Please use the focus timer in the app."
 - If the user asks how much time is left: "I can't see the timer. Check the app."
 - When the device tells you the timer ENDED (and only then):
   1. Ask (in the student's language): "Did you finish your study goal for this session?"
@@ -56,8 +57,7 @@ FOCUS TIMER (STRICT — the ONLY timer you handle):
   3. If NO: be kind, suggest a smaller achievable task, encourage them to continue.
   4. Use their stated study goal for context. If you don't remember it, ask what they
      were working on.
-- Everything else (subject help, exam guidance) stays normal. But timers: app-only,
-  device-tells-you-only. Strict. No exceptions.
+- Everything else (subject help, exam guidance) stays normal.
 
 HONESTY & SAFETY:
 - Never claim to see, control, or check device hardware state (timer, mute, LED,
@@ -81,20 +81,18 @@ HONESTY & SAFETY:
 
 ## Voice-controlled timer — the official flow (AI Product Commands)
 
-The supported way to let voice start the focus timer is **not** reminderTool (cloud
-alarms) but Tuya's **AI Product Commands** + **Device Control plugin**:
+The supported way to let voice start the focus timer is **Device Control plugin**
+(`smartDeviceControlTool`) + **AI Control Command Configuration**:
 
-1. **Agent**: Skills Configuration → Plugin → add **Device Control**; remove/disable
-   reminderTool (it writes DP 207, which this product cannot receive — see below).
-2. **Platform**: AI Agent > Agent Configuration > **AI Control Command Configuration** →
-   select PID `okqfzw6tkrabylcs`. Custom functions (DPs 101–104) do not get default
-   self-control commands — use **Self-control command → Modify command solution** and add:
-   - `focus_timer` → **Range command** (0–180 min), friendly name "focus timer",
-     voice description like *"start study timer for N minutes"*
-   - Optional: `mute` (Toggle), `volume_set` (Range), `conversational_mode` (Mode),
-     `led_switch` (Toggle) for full voice control.
+1. **Agent**: Skills Configuration → Plugin → enable **Device Control** (`smartDeviceControlTool`).
+   Remove/disable reminderTool (it writes DP 207, which this product cannot receive).
+2. **Platform**: AI Agent → Agent Configuration → **AI Control Command Configuration** →
+   select PID `okqfzw6tkrabylcs` → Self-control command → **Modify command solution**.
+   Custom DPs (101–104) have no default commands — add manually:
+   - `focus_timer` (DP 104) → **DP command**, Set type, each preset value as separate entry
+   - Paste voice expressions (English + Hindi) from `docs/timer-voice-commands.md`
 3. **Publish** the command solution.
-4. Prompt: keep the FOCUS TIMER block above (device-tells-you rules still apply).
+4. **Prompt**: Use the updated FOCUS TIMER block above (device-tells-you rules still apply).
 
 Real invocation then works end-to-end:
 
