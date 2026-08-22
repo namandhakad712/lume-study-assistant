@@ -122,6 +122,11 @@ OPERATE_RET audio_dp_obj_proc(dp_obj_recv_t *dpobj)
             app_dp_set_focus_timer(dp->value.dp_value);
             break;
         }
+        case 207: {
+            /* Cloud alarm/reminder fired (voice-created timer via agent). */
+            app_dp_on_cloud_alarm_fired();
+            break;
+        }
         default:
             break;
         }
@@ -249,6 +254,15 @@ void user_event_handler_on(tuya_iot_client_t *client, tuya_event_msg_t *event)
         PR_DEBUG("dpid:%d type:RAW len:%d data:", dp->id, dp->len);
         for (index = 0; index < dp->len; index++) {
             PR_DEBUG_RAW("%02x", dp->data[index]);
+        }
+
+        /* DP 207: cloud alarm/reminder fired (voice-created timer via agent).
+         * The payload is the alarm spec JSON (date/loops/time) — we only need
+         * to know that it FIRED. Ring + let the agent speak. Do not echo it
+         * back to the cloud. */
+        if (dp->id == 207) {
+            app_dp_on_cloud_alarm_fired();
+            break;
         }
 
         tuya_iot_dp_raw_report(client, dpraw->devid, &dpraw->dp, 3);

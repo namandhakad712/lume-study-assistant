@@ -62,6 +62,12 @@ OPERATE_RET app_dp_set_study_mode(uint8_t mode_idx);
 OPERATE_RET app_dp_set_focus_timer(uint32_t minutes);
 
 /**
+ * @brief Called when a cloud alarm/reminder fires (DP 207 arrives).
+ *        Rings the local chime and asks the agent to speak the goal question.
+ */
+void app_dp_on_cloud_alarm_fired(void);
+
+/**
  * @brief Handle an AI mode state change: report DP 2 and re-apply any
  *        active LED override.
  * @param state new AI mode state.

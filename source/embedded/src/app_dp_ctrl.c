@@ -145,6 +145,18 @@ static void __app_dp_focus_tick(TIMER_ID timer_id, void *arg)
     tal_sw_timer_stop(sg_focus_timer);
 }
 
+void app_dp_on_cloud_alarm_fired(void)
+{
+    /* A voice-created cloud alarm/reminder just fired (DP 207 received).
+     * Ring locally and let the agent deliver the message / goal question. */
+    PR_NOTICE("app_dp: cloud alarm fired");
+    ai_audio_player_alert(AI_AUDIO_ALERT_WAKEUP);
+    __app_dp_agent_text(
+        "The study timer or reminder just went off. Tell the user TIMER UP and ask "
+        "whether they completed their study goal.",
+        "cloud alarm");
+}
+
 OPERATE_RET app_dp_set_chat_mode(uint8_t mode_idx)
 {
     AI_CHAT_MODE_E mode;
