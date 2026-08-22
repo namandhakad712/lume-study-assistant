@@ -79,6 +79,35 @@ HONESTY & SAFETY:
 
 ---
 
+## Voice-controlled timer — the official flow (AI Product Commands)
+
+The supported way to let voice start the focus timer is **not** reminderTool (cloud
+alarms) but Tuya's **AI Product Commands** + **Device Control plugin**:
+
+1. **Agent**: Skills Configuration → Plugin → add **Device Control**; remove/disable
+   reminderTool (it writes DP 207, which this product cannot receive — see below).
+2. **Platform**: AI Agent > Agent Configuration > **AI Control Command Configuration** →
+   select PID `okqfzw6tkrabylcs`. Custom functions (DPs 101–104) do not get default
+   self-control commands — use **Self-control command → Modify command solution** and add:
+   - `focus_timer` → **Range command** (0–180 min), friendly name "focus timer",
+     voice description like *"start study timer for N minutes"*
+   - Optional: `mute` (Toggle), `volume_set` (Range), `conversational_mode` (Mode),
+     `led_switch` (Toggle) for full voice control.
+3. **Publish** the command solution.
+4. Prompt: keep the FOCUS TIMER block above (device-tells-you rules still apply).
+
+Real invocation then works end-to-end:
+
+```
+voice: "5 minute ka timer laga do"
+  -> agent Device Control tool -> {"104": 5} sent to device
+  -> firmware app_dp_set_focus_timer(5): chime + agent context injection
+  -> on-device countdown (cloud-independent)
+  -> at 0: chime + goal-question injected into the agent
+```
+
+---
+
 ## Why NOT reminderTool (cloud alarms) on this product
 
 The agent's **reminderTool** plugin creates cloud timers whose action writes **DP 207**.
